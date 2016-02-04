@@ -7,9 +7,7 @@ const api = require('../../utils/api')
 module.exports = function index (req, res, next) {
   api.findOne(models.tutorial, req)
   .then(tutorial => {
-    res.json({
-      tutorial
-    })
+    res.json(tutorial)
   })
   .catch(next)
 }

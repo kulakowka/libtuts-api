@@ -18,9 +18,7 @@ module.exports = function index (req, res, next) {
     req.params.platform = platform.id
     return api.findOne(models.project, req)
     .then(project => {
-      res.json({
-        project
-      })
+      res.json(project)
     })
     // .catch(next)
   })
