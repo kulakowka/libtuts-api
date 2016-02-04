@@ -24,6 +24,12 @@ function seedData () {
         if (err) return console.log(err)
         models.project.create(projects, callback)
       })
+    },
+    tutorials (callback) {
+      mapTutorials(data.tutorials, (err, tutorials) => {
+        if (err) return console.log(err)
+        models.tutorial.create(tutorials, callback)
+      })
     }
   }, (err, result) => {
     if (err) return console.log(err)
@@ -34,6 +40,13 @@ function seedData () {
     mongoose.connection.close()
   })
 }
+
+// Helpers for data seed
+
+function mapProjects (projects, callback) {
+  async.map(projects, fillProjectRelations, callback)
+}
+
 function fillProjectRelations (project, callback) {
   loadPlatform(project, (err, platform) => {
     if (err) return callback(err)
@@ -54,6 +67,34 @@ function loadLanguage (model, callback) {
   models.language.findOne({slug: model.language}, callback)
 }
 
-function mapProjects (projects, callback) {
-  async.map(projects, fillProjectRelations, callback)
+function mapTutorials (tutorials, callback) {
+  async.map(tutorials, fillTutorialRelations, callback)
+}
+
+function fillTutorialRelations (tutorial, callback) {
+  loadPlatforms(tutorial, (err, platforms) => {
+    if (err) return callback(err)
+    tutorial.platforms = platforms.map(p => p.id)
+    loadLanguages(tutorial, (err, languages) => {
+      if (err) return callback(err)
+      tutorial.languages = languages.map(l => l.id)
+      loadProjects(tutorial, (err, projects) => {
+        if (err) return callback(err)
+        tutorial.projects = projects.map(l => l.id)
+        callback(null, tutorial)
+      })
+    })
+  })
+}
+
+function loadProjects (model, callback) {
+  models.project.find({slug: {$in: model.projects}}, callback)
+}
+
+function loadPlatforms (model, callback) {
+  models.platform.find({slug: {$in: model.platforms}}, callback)
+}
+
+function loadLanguages (model, callback) {
+  models.language.find({slug: {$in: model.languages}}, callback)
 }

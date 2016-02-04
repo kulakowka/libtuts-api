@@ -12,6 +12,9 @@ router
 .get('/language', c.language.index)
 .get('/language/:slug', c.language.show)
 
+.get('/tutorial', c.tutorial.index)
+.get('/tutorial/:_id', c.tutorial.show)
+
 .get('/project', c.project.index)
 .get('/project/:platform/:slug', c.project.show)
 

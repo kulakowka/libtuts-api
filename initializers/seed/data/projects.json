@@ -9,8 +9,7 @@
       "keywords":["elm", "flux", "replay", "live", "hot", "immutable", "functional", "predictable", "state", "reducer", "redux"],
       "language":"javascript",
       "platform":"npm",
-      "tutorialsCount":150,
-      "tutorials":[]
+      "tutorialsCount":150
    },
    {  
       "name":"React.js",
@@ -22,7 +21,6 @@
       "keywords":["react", "flux", "relay"],
       "language":"javascript",
       "platform":"npm",
-      "tutorialsCount":89,
-      "tutorials":[]
+      "tutorialsCount":89
    }
 ]
