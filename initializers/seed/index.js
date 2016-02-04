@@ -18,6 +18,12 @@ function seedData () {
     },
     platforms (callback) {
       models.platform.create(data.platforms, callback)
+    },
+    projects (callback) {
+      mapProjects(data.projects, (err, projects) => {
+        if (err) return console.log(err)
+        models.project.create(projects, callback)
+      })
     }
   }, (err, result) => {
     if (err) return console.log(err)
@@ -27,4 +33,27 @@ function seedData () {
     }
     mongoose.connection.close()
   })
+}
+function fillProjectRelations (project, callback) {
+  loadPlatform(project, (err, platform) => {
+    if (err) return callback(err)
+    project.platform = platform.id
+    loadLanguage(project, (err, language) => {
+      if (err) return callback(err)
+      project.language = language.id
+      callback(null, project)
+    })
+  })
+}
+
+function loadPlatform (model, callback) {
+  models.platform.findOne({slug: model.platform}, callback)
+}
+
+function loadLanguage (model, callback) {
+  models.language.findOne({slug: model.language}, callback)
+}
+
+function mapProjects (projects, callback) {
+  async.map(projects, fillProjectRelations, callback)
 }

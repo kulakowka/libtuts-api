@@ -1,0 +1,28 @@
+[  
+   {  
+      "name":"Redux",
+      "slug":"redux",
+      "homepageUrl":"http://redux.js.org/",
+      "repositoryUrl":"https://github.com/rackt/redux/",
+      "packageManagerUrl":"https://www.npmjs.com/package/redux",
+      "description":"Predictable state container for JavaScript apps.",
+      "keywords":["elm", "flux", "replay", "live", "hot", "immutable", "functional", "predictable", "state", "reducer", "redux"],
+      "language":"javascript",
+      "platform":"npm",
+      "tutorialsCount":150,
+      "tutorials":[]
+   },
+   {  
+      "name":"React.js",
+      "slug":"react",
+      "homepageUrl":"https://facebook.github.io/react/",
+      "repositoryUrl":"https://github.com/facebook/react",
+      "packageManagerUrl":"https://www.npmjs.com/package/react",
+      "description":"React is a JavaScript library for building user interfaces.",
+      "keywords":["react", "flux", "relay"],
+      "language":"javascript",
+      "platform":"npm",
+      "tutorialsCount":89,
+      "tutorials":[]
+   }
+]

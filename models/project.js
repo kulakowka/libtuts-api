@@ -54,11 +54,7 @@ const schema = new Schema({
   tutorialsCount: {
     type: Number,
     default: 0
-  },
-  tutorials: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Tutorial'
-  }]
+  }
 }, {
   timestamps: {
     createdAt: 'createdAt',

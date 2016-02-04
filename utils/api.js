@@ -12,13 +12,14 @@ const api = {
     const select = query.select ? query.select.split(',').join(' ') : ''
     const skip = query.skip || 0
     const sort = query.sort ? query.sort.split(',').join(' ') : ''
-
+    const populate = query.populate ? query.populate.split(',').join(' ') : ''
     return model.find()
     .where(where)
     .select(select)
     .limit(limit)
     .skip(skip)
     .sort(sort)
+    .populate(populate)
     .exec()
     .then(items => {
       return items.map(item => serializers[modelName](item.toJSON()))
@@ -29,8 +30,9 @@ const api = {
     const query = req.query
     const params = req.params
     const select = query.select ? query.select.split(',').join(' ') : ''
+    const populate = query.populate ? query.populate.split(',').join(' ') : ''
     return model.findOne(params)
-
+    .populate(populate)
     .select(select)
     .exec()
   }
