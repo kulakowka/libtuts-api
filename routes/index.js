@@ -15,6 +15,8 @@ router
 .get('/tutorial', c.tutorial.index)
 .get('/tutorial/:_id', c.tutorial.show)
 
+.get('/comment', c.comment.index)
+
 .get('/project', c.project.index)
 .get('/project/:platform/:slug', c.project.show)
 

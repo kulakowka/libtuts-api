@@ -21,14 +21,20 @@ function seedData () {
     },
     projects (callback) {
       mapProjects(data.projects, (err, projects) => {
-        if (err) return console.log(err)
+        if (err) return callback(err)
         models.project.create(projects, callback)
       })
     },
     tutorials (callback) {
       mapTutorials(data.tutorials, (err, tutorials) => {
-        if (err) return console.log(err)
+        if (err) return callback(err)
         models.tutorial.create(tutorials, callback)
+      })
+    },
+    comments (callback) {
+      mapComments(data.comments, (err, comments) => {
+        if (err) return callback(err)
+        models.comment.create(comments, callback)
       })
     }
   }, (err, result) => {
@@ -42,6 +48,18 @@ function seedData () {
 }
 
 // Helpers for data seed
+function mapComments (comments, callback) {
+  async.map(comments, fillCommentRelations, callback)
+}
+
+function fillCommentRelations (comment, callback) {
+  models.tutorial.find({}, (err, tutorials) => {
+    if (err) return callback(err)
+    let tutorial = tutorials.pop()
+    comment.tutorial = tutorial.id
+    callback(null, comment)
+  })
+}
 
 function mapProjects (projects, callback) {
   async.map(projects, fillProjectRelations, callback)
