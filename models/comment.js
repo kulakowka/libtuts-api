@@ -10,7 +10,8 @@ const schema = new Schema({
     type: String,
     maxlength: 200000,
     trim: true,
-    required: true
+    required: true,
+    select: false
   },
   contentHtml: {
     type: String

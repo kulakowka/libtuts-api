@@ -26,7 +26,8 @@ const schema = new Schema({
   content: {
     type: String,
     trim: true,
-    maxlength: 200000
+    maxlength: 200000,
+    select: false
   },
   contentHtml: {
     type: String
