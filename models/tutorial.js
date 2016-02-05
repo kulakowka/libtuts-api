@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('../utils/mongoose')
+const marked = require('../utils/marked')
 
 const Schema = mongoose.Schema
 
@@ -26,6 +27,9 @@ const schema = new Schema({
     type: String,
     trim: true,
     maxlength: 200000
+  },
+  contentHtml: {
+    type: String
   },
   keywords: {
     type: [String],
@@ -61,6 +65,12 @@ const schema = new Schema({
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   }
+})
+
+schema.pre('save', function (next) {
+  if (!this.isModified('content')) return next()
+  this.contentHtml = marked(this.content)
+  next()
 })
 
 module.exports = mongoose.model('Tutorial', schema)
