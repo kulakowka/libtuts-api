@@ -2,23 +2,25 @@
 
 const requireDir = require('require-dir')
 const router = require('express').Router()
+const path = require('path')
+const controllers = requireDir('../controllers', {recurse: true})
 
-const c = requireDir('../controllers', {recurse: true})
-
-router
-.get('/platform', c.platform.index)
-.get('/platform/:slug', c.platform.show)
-
-.get('/language', c.language.index)
-.get('/language/:slug', c.language.show)
-
-.get('/tutorial', c.tutorial.index)
-.get('/tutorial/:_id', c.tutorial.show)
-
-.get('/comment', c.comment.index)
-
-.post('/project', c.project.create)
-.get('/project', c.project.index)
-.get('/project/:platform/:slug', c.project.show)
+const resources = Object.keys(controllers)
+const methods = {
+  index: 'get',
+  show: 'get',
+  create: 'post',
+  update: 'put',
+  delete: 'delete',
+}
+resources.forEach(resource => {
+  const actions = Object.keys(controllers[resource])
+  actions.forEach(action => {
+    const pathname = path.join('/', resource, action)
+    const handler = controllers[resource][action]
+    const method = methods[action]
+    router[method](pathname, handler)
+  })
+})
 
 module.exports = router
