@@ -12,7 +12,7 @@ function updateLanguages (languages) {
 }
 
 function updateLanguage (language) {
-  return models.project.count({language: language.id}).then(count => {
+  return models.project.count({language: language.name}).then(count => {
     if (language.projectsCount === count) return;
     language.projectsCount = count
     language.save()

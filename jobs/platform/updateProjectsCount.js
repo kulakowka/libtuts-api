@@ -12,7 +12,7 @@ function updatePlatforms (platforms) {
 }
 
 function updatePlatform (platform) {
-  return models.project.count({platform: platform.id}).then(count => {
+  return models.project.count({platform: platform.name}).then(count => {
     if (platform.projectsCount === count) return;
     platform.projectsCount = count
     platform.save()
