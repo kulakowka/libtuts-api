@@ -39,11 +39,13 @@ const schema = new Schema({
   },
   language: {
     type: String,
+    required: true,
     trim: true,
     index: true
   },
   platform: {
     type: String,
+    required: true,
     trim: true,
     index: true
   },

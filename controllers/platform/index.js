@@ -5,6 +5,6 @@ const api = require('../../utils/api')
 
 module.exports = function index (req, res, next) {
   api.find(models.platform, req)
-  .then(platforms => res.json(platforms))
+  .then(res.json.bind(res))
   .catch(next)
 }

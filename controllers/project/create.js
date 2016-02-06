@@ -1,14 +1,15 @@
 'use strict'
 
-const requireDir = require('require-dir')
-const models = requireDir('../../models', {recurse: true})
-const api = require('../../utils/api')
+const models = require('require-dir')('../../models', {recurse: true})
 
 module.exports = function index (req, res, next) {
-  let slug = req.body.name
-  console.log(req.body)
-  models.project.findOneAndUpdate({slug}, req.body, {new: true, upsert: true}, (err, project) => {
-    if (err) return next(err)
-    res.json(project)
-  })
+  const condition = {
+    name: req.body.name,
+    platform: req.body.platform
+  }
+  models.project
+  .findOneAndUpdate(condition, req.body, {new: true, upsert: true})
+  .exec()
+  .then(res.json.bind(res))
+  .catch(next)
 }

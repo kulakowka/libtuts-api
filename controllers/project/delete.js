@@ -1,10 +1,11 @@
 'use strict'
 
 const models = require('require-dir')('../../models', {recurse: true})
-const api = require('../../utils/api')
 
 module.exports = function index (req, res, next) {
-  api.findOne(models.platform, req)
+  models.project
+  .findOneAndRemove(req.query.where)
+  .exec()
   .then(res.json.bind(res))
   .catch(next)
 }
