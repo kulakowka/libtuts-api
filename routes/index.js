@@ -11,7 +11,7 @@ const methods = {
   show: 'get',
   create: 'post',
   update: 'put',
-  delete: 'delete',
+  delete: 'delete'
 }
 resources.forEach(resource => {
   const actions = Object.keys(controllers[resource])
@@ -19,7 +19,11 @@ resources.forEach(resource => {
     const pathname = path.join('/', resource, action)
     const handler = controllers[resource][action]
     const method = methods[action]
-    router[method](pathname, handler)
+    router[method](pathname, (req, res, next) => {
+      handler(req, res)
+      .then(res.json.bind(res))
+      .catch(next)
+    })
   })
 })
 

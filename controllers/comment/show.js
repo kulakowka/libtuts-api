@@ -3,4 +3,4 @@
 const models = require('require-dir')('../../models', {recurse: true})
 const api = require('../../utils/api')
 
-module.exports = (req, res) => api.findOne(models.project, req)
+module.exports = (req, res) => api.findOne(models.comment, req)
