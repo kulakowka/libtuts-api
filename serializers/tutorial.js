@@ -2,7 +2,6 @@
 
 // serializer
 module.exports = function tutorialSerializer (item) {
-  return Object.assign(item, {
-    webUrl: `/tutorial/${item.id}`
-  })
+  if (item._id) item.webUrl = `/tutorial/${item._id}`
+  return item
 }

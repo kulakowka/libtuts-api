@@ -7,10 +7,25 @@ const Schema = mongoose.Schema
 const schema = new Schema({
   name: {
     type: String,
+    lowercase: true,
     required: true,
     trim: true,
     index: true,
     maxlength: 100
+  },
+  language: {
+    type: String,
+    required: true,
+    lowercase: true,
+    trim: true,
+    index: true
+  },
+  platform: {
+    type: String,
+    lowercase: true,
+    required: true,
+    trim: true,
+    index: true
   },
   homepageUrl: {
     type: String,
@@ -34,20 +49,9 @@ const schema = new Schema({
   },
   keywords: {
     type: [String],
-    trim: true,
-    index: true
-  },
-  language: {
-    type: String,
-    required: true,
-    trim: true,
-    index: true
-  },
-  platform: {
-    type: String,
-    required: true,
-    trim: true,
-    index: true
+    lowercase: true,
+    trim: true
+    // index: true
   },
   tutorialsCount: {
     type: Number,
@@ -68,9 +72,8 @@ const schema = new Schema({
   }
 })
 
-schema.pre('save', function (next) {
-  this.keywords = this.keywords.split(',')
-  next()
-})
+schema.index({ name: 1, platform: 1 }, { unique: true })
+
+schema.path('keywords').set(keywords => keywords.split(','))
 
 module.exports = mongoose.model('Project', schema)

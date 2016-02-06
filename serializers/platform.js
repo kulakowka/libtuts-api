@@ -2,7 +2,7 @@
 
 // serializer
 module.exports = function platformSerializer (item) {
-  return Object.assign(item, {
-    webUrl: `/${item.name.toLowerCase()}`
-  })
+  let name = item.name
+  if (name) item.webUrl = `/${name}`
+  return item
 }

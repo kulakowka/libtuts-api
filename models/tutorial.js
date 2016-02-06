@@ -37,10 +37,9 @@ const schema = new Schema({
     trim: true,
     index: true
   },
-  languages: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Language'
-  }],
+  languages: {
+    type: [String]
+  },
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -49,13 +48,12 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-  platforms: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Platform'
-  }],
+  platforms: {
+    type: [String]
+  },
   projects: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Project'
+    name: String,
+    platform: String
   }],
   commentsCount: {
     type: Number,
@@ -67,6 +65,8 @@ const schema = new Schema({
     updatedAt: 'updatedAt'
   }
 })
+
+schema.path('keywords').set(keywords => keywords.split(','))
 
 schema.pre('save', function (next) {
   if (!this.isModified('content')) return next()

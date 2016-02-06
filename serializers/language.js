@@ -2,7 +2,7 @@
 
 // serializer
 module.exports = function languageSerializer (item) {
-  return Object.assign(item, {
-    webUrl: `/language/${item.name.toLowerCase()}`
-  })
+  let name = item.name
+  if (name) item.webUrl = `/language/${name}`
+  return item
 }

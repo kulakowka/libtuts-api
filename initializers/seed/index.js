@@ -19,17 +19,11 @@ function seedData () {
     platforms (callback) {
       models.platform.create(data.platforms, callback)
     },
-    projects (callback) {
-      mapProjects(data.projects, (err, projects) => {
-        if (err) return callback(err)
-        models.project.create(projects, callback)
-      })
-    },
     tutorials (callback) {
-      mapTutorials(data.tutorials, (err, tutorials) => {
-        if (err) return callback(err)
-        models.tutorial.create(tutorials, callback)
-      })
+      models.tutorial.create(data.tutorials, callback)
+    },
+    projects (callback) {
+      models.project.create(data.projects, callback)
     },
     comments (callback) {
       mapComments(data.comments, (err, comments) => {
@@ -59,60 +53,4 @@ function fillCommentRelations (comment, callback) {
     comment.tutorial = tutorial.id
     callback(null, comment)
   })
-}
-
-function mapProjects (projects, callback) {
-  async.map(projects, fillProjectRelations, callback)
-}
-
-function fillProjectRelations (project, callback) {
-  loadPlatform(project, (err, platform) => {
-    if (err) return callback(err)
-    project.platform = platform.id
-    loadLanguage(project, (err, language) => {
-      if (err) return callback(err)
-      project.language = language.id
-      callback(null, project)
-    })
-  })
-}
-
-function loadPlatform (model, callback) {
-  models.platform.findOne({slug: model.platform}, callback)
-}
-
-function loadLanguage (model, callback) {
-  models.language.findOne({slug: model.language}, callback)
-}
-
-function mapTutorials (tutorials, callback) {
-  async.map(tutorials, fillTutorialRelations, callback)
-}
-
-function fillTutorialRelations (tutorial, callback) {
-  loadPlatforms(tutorial, (err, platforms) => {
-    if (err) return callback(err)
-    tutorial.platforms = platforms.map(p => p.id)
-    loadLanguages(tutorial, (err, languages) => {
-      if (err) return callback(err)
-      tutorial.languages = languages.map(l => l.id)
-      loadProjects(tutorial, (err, projects) => {
-        if (err) return callback(err)
-        tutorial.projects = projects.map(l => l.id)
-        callback(null, tutorial)
-      })
-    })
-  })
-}
-
-function loadProjects (model, callback) {
-  models.project.find({slug: {$in: model.projects}}, callback)
-}
-
-function loadPlatforms (model, callback) {
-  models.platform.find({slug: {$in: model.platforms}}, callback)
-}
-
-function loadLanguages (model, callback) {
-  models.language.find({slug: {$in: model.languages}}, callback)
 }

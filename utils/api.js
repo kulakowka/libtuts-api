@@ -13,6 +13,7 @@ const api = {
     const skip = query.skip || 0
     const sort = query.sort ? query.sort.split(',').join(' ') : ''
     const populate = query.populate ? query.populate.split(',').join(' ') : ''
+
     return model.find()
     .where(where)
     .select(select)
@@ -21,20 +22,21 @@ const api = {
     .sort(sort)
     .populate(populate)
     .exec()
-    .then(items => {
-      return items.map(item => serializers[modelName](item.toJSON()))
-    })
+    .then(items => items.map(item => serializers[modelName](item.toJSON())))
   },
 
   findOne (model, req) {
+    const modelName = model.modelName.toLowerCase()
     const query = req.query
-    const params = req.params
+    const where = query.where ? JSON.parse(query.where) : {}
     const select = query.select ? query.select.split(',').join(' ') : ''
     const populate = query.populate ? query.populate.split(',').join(' ') : ''
-    return model.findOne(params)
-    .populate(populate)
+
+    return model.findOne(where)
     .select(select)
+    .populate(populate)
     .exec()
+    .then(item => item && serializers[modelName](item.toJSON()))
   }
 }
 

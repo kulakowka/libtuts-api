@@ -1,51 +1,67 @@
 [  
    {  
       "name":"Redux",
-      "slug":"redux",
       "homepageUrl":"http://redux.js.org/",
       "repositoryUrl":"https://github.com/rackt/redux/",
       "packageManagerUrl":"https://www.npmjs.com/package/redux",
       "description":"Predictable state container for JavaScript apps.",
-      "keywords":["elm", "flux", "replay", "live", "hot", "immutable", "functional", "predictable", "state", "reducer", "redux"],
+      "keywords":"elm,flux,replay,live",
       "language":"javascript",
       "platform":"npm",
       "tutorialsCount":150
    },
    {  
       "name":"React.js",
-      "slug":"react",
       "homepageUrl":"https://facebook.github.io/react/",
       "repositoryUrl":"https://github.com/facebook/react",
       "packageManagerUrl":"https://www.npmjs.com/package/react",
       "description":"React is a JavaScript library for building user interfaces.",
-      "keywords":["react", "flux", "relay"],
+      "keywords":"react,flux,relay",
       "language":"javascript",
       "platform":"npm",
       "tutorialsCount":89
    },
    {  
       "name":"Express.js",
-      "slug":"express",
       "homepageUrl":"https://expressjs.com",
       "repositoryUrl":"https://github.com/strongloop/express",
       "packageManagerUrl":"https://www.npmjs.com/package/express",
       "description":"Fast, unopinionated, minimalist web framework for node.",
-      "keywords":["nodejs", "express", "framework"],
+      "keywords":"nodejs,express,framework",
       "language":"javascript",
       "platform":"npm",
       "tutorialsCount":2
    },
    {  
       "name":"Browserify",
-      "slug":"browserify",
       "homepageUrl":"http://browserify.org/",
       "repositoryUrl":"https://github.com/substack/node-browserify",
       "packageManagerUrl":"https://www.npmjs.com/package/browserify",
       "description":"browser-side require() the node way.",
-      "keywords":["nodejs", "require", "browserify"],
+      "keywords":"nodejs,require,browserify",
       "language":"javascript",
       "platform":"npm",
       "tutorialsCount":43
+   },
+   {  
+      "name":"mocha",
+      "repositoryUrl":"https://github.com/mochajs/mocha",
+      "packageManagerUrl":"https://www.npmjs.com/package/mocha",
+      "description":"simple, flexible, fun test framework.",
+      "keywords":"tap,tdd,bdd,test,mocha",
+      "language":"javascript",
+      "platform":"npm",
+      "tutorialsCount":9999
+   },
+   {  
+      "name":"bundler",
+      "homepageUrl":"http://bundler.io/",
+      "repositoryUrl":"https://github.com/bundler/bundler",
+      "packageManagerUrl":"https://rubygems.org/gems/bundler",
+      "description":"Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably",
+      "keywords":"nodejs,require,browserify",
+      "language":"ruby",
+      "platform":"rubygems"
    }
    
 ]

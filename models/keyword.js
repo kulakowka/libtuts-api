@@ -7,13 +7,10 @@ const Schema = mongoose.Schema
 const schema = new Schema({
   name: {
     type: String,
-    required: true
-  },
-  slug: {
-    type: String,
     lowercase: true,
-    trim: true,
-    maxlength: 200
+    required: true,
+    maxlength: 50,
+    trim: true
   },
   tutorialsCount: {
     type: Number,

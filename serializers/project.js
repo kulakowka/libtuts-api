@@ -2,9 +2,9 @@
 
 // serializer
 module.exports = function projectSerializer (item) {
-  const platform = item.platform.toLowerCase()
-  const name = item.name.toLowerCase()
-  return Object.assign(item, {
-    webUrl: `/${platform}/${name}`
-  })
+  const platform = item.platform
+  const name = item.name
+
+  if (platform && name) item.webUrl = `/${platform}/${name}`
+  return item
 }

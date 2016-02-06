@@ -2,7 +2,8 @@
 
 // serializer
 module.exports = function commentSerializer (item) {
-  return Object.assign(item, {
-    // apiUrl: item.slug ? `/language/${item.slug}` : undefined
-  })
+  let tutorial = item.tutorial
+  let _id = item._id
+  if (tutorial && _id) item.webUrl = `/tutorial/${tutorial}#comment_${_id}`
+  return item
 }
