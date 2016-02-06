@@ -22,5 +22,30 @@
       "language":"javascript",
       "platform":"npm",
       "tutorialsCount":89
+   },
+   {  
+      "name":"Express.js",
+      "slug":"express",
+      "homepageUrl":"https://expressjs.com",
+      "repositoryUrl":"https://github.com/strongloop/express",
+      "packageManagerUrl":"https://www.npmjs.com/package/express",
+      "description":"Fast, unopinionated, minimalist web framework for node.",
+      "keywords":["nodejs", "express", "framework"],
+      "language":"javascript",
+      "platform":"npm",
+      "tutorialsCount":2
+   },
+   {  
+      "name":"Browserify",
+      "slug":"browserify",
+      "homepageUrl":"http://browserify.org/",
+      "repositoryUrl":"https://github.com/substack/node-browserify",
+      "packageManagerUrl":"https://www.npmjs.com/package/browserify",
+      "description":"browser-side require() the node way.",
+      "keywords":["nodejs", "require", "browserify"],
+      "language":"javascript",
+      "platform":"npm",
+      "tutorialsCount":43
    }
+   
 ]
