@@ -17,6 +17,7 @@ router
 
 .get('/comment', c.comment.index)
 
+.post('/project', c.project.create)
 .get('/project', c.project.index)
 .get('/project/:platform/:slug', c.project.show)
 

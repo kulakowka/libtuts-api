@@ -7,16 +7,10 @@ const Schema = mongoose.Schema
 const schema = new Schema({
   name: {
     type: String,
-    trim: true,
     required: true,
-    maxlength: 200
-  },
-  slug: {
-    type: String,
-    lowercase: true,
     trim: true,
-    maxlength: 200,
-    index: true
+    index: true,
+    maxlength: 100
   },
   homepageUrl: {
     type: String,
@@ -44,14 +38,24 @@ const schema = new Schema({
     index: true
   },
   language: {
-    type: Schema.Types.ObjectId,
-    ref: 'Language'
+    type: String,
+    trim: true,
+    index: true
   },
   platform: {
-    type: Schema.Types.ObjectId,
-    ref: 'Platform'
+    type: String,
+    trim: true,
+    index: true
   },
   tutorialsCount: {
+    type: Number,
+    default: 0
+  },
+  stars: {
+    type: Number,
+    default: 0
+  },
+  rank: {
     type: Number,
     default: 0
   }
@@ -60,6 +64,11 @@ const schema = new Schema({
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   }
+})
+
+schema.pre('save', function (next) {
+  this.keywords = this.keywords.split(',')
+  next()
 })
 
 module.exports = mongoose.model('Project', schema)

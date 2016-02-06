@@ -1,9 +1,9 @@
 'use strict'
 
 // serializer
-module.exports = function projectSerializer (item) {
+module.exports = function projectSerializer (item) {  
+  const platform = item.platform.toLowerCase()
   return Object.assign(item, {
-    // TODO: fix apiUrl
-    apiUrl: item.slug ? `/project/:platform/${item.slug}` : undefined
+    webUrl: `/${platform}/${item.slug}`
   })
 }
