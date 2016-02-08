@@ -64,6 +64,10 @@ const schema = new Schema({
   rank: {
     type: Number,
     default: 0
+  },
+  isLoaded: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: {
@@ -74,6 +78,9 @@ const schema = new Schema({
 
 schema.index({ name: 1, platform: 1 }, { unique: true })
 
-schema.path('keywords').set(keywords => keywords.split(','))
+schema.path('keywords').set(keywords => {
+  if (typeof keywords === String) return keywords.split(',')
+  return keywords
+})
 
 module.exports = mongoose.model('Project', schema)

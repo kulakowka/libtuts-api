@@ -5,15 +5,20 @@ const serializers = requireDir('../serializers', {recurse: true})
 
 const api = {
   find (model, req) {
-    const modelName = model.modelName.toLowerCase()
-    const query = req.query
-    const limit = query.limit || 30
-    const where = query.where ? JSON.parse(query.where) : {}
-    const select = query.select ? query.select.split(',').join(' ') : ''
-    const skip = query.skip || 0
-    const sort = query.sort ? query.sort.split(',').join(' ') : ''
-    const populate = query.populate ? query.populate.split(',').join(' ') : ''
-
+    let modelName = model.modelName.toLowerCase()
+    let query = req.query
+    let limit = query.limit || 30
+    let where = {}
+    try {
+      where = query.where ? JSON.parse(query.where) : {}
+    } catch (err) {}
+    let select = query.select ? query.select.split(',').join(' ') : ''
+    let skip = query.skip || 0
+    let sort = query.sort || ''
+    let populate = query.populate ? query.populate.split(',').join(' ') : ''
+    try {
+      sort = JSON.parse(sort)
+    } catch (err) {}
     return model.find()
     .where(where)
     .select(select)
@@ -26,11 +31,11 @@ const api = {
   },
 
   findOne (model, req) {
-    const modelName = model.modelName.toLowerCase()
-    const query = req.query
-    const where = query.where ? JSON.parse(query.where) : {}
-    const select = query.select ? query.select.split(',').join(' ') : ''
-    const populate = query.populate ? query.populate.split(',').join(' ') : ''
+    let modelName = model.modelName.toLowerCase()
+    let query = req.query
+    let where = query.where ? JSON.parse(query.where) : {}
+    let select = query.select ? query.select.split(',').join(' ') : ''
+    let populate = query.populate ? query.populate.split(',').join(' ') : ''
 
     return model.findOne(where)
     .select(select)
