@@ -83,4 +83,11 @@ schema.path('keywords').set(keywords => {
   return keywords
 })
 
+schema.pre('save', function (next) {
+  // if (this.keywords.length) return next()
+  // if (this.platforms) this.keywords = this.keywords.concat(this.platforms, this.languages)
+  // if (this.languages)
+  next()
+})
+
 module.exports = mongoose.model('Project', schema)

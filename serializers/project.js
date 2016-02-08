@@ -6,5 +6,6 @@ module.exports = function projectSerializer (item) {
   const name = item.name
 
   if (platform && name) item.webUrl = `/${platform}/${name}`
+
   return item
 }
