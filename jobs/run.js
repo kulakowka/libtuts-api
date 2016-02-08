@@ -1,11 +1,9 @@
-const debug = require('debug')('app:jobs:platform:updateProjectsCount')
 const jobs = require('require-dir')('.', {recurse: true})
 const mongoose = require('../utils/mongoose')
 const schedule = require('node-schedule')
 
 /*
-
-Schedule 
+Schedule
 *    *    *    *    *    *
 ┬    ┬    ┬    ┬    ┬    ┬
 │    │    │    │    │    |
@@ -17,10 +15,10 @@ Schedule
 └───────────────────────── second (0 - 59, OPTIONAL)
  */
 
-
 mongoose.connection.on('connected', startJobs)
 
 function startJobs () {
-  schedule.scheduleJob('*/1 * * * *', jobs.platform.updateProjectsCount)
-  schedule.scheduleJob('*/1 * * * *', jobs.language.updateProjectsCount)
+  schedule.scheduleJob('*/1 * * * *', jobs.platform.updateCounters)
+
+  schedule.scheduleJob('*/1 * * * *', jobs.language.updateCounters)
 }
