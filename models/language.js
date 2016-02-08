@@ -10,8 +10,7 @@ const schema = new Schema({
     lowercase: true,
     required: true,
     trim: true,
-    unique: true,
-    index: true
+    unique: true
   },
   tutorialsCount: {
     type: Number,
@@ -22,5 +21,9 @@ const schema = new Schema({
     default: 0
   }
 })
+
+// Добавим индекс для получения списка всех языков на странице: /languages
+schema.index({ projectsCount: -1 })
+
 
 module.exports = mongoose.model('Language', schema)

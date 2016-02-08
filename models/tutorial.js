@@ -34,8 +34,7 @@ const schema = new Schema({
   },
   keywords: {
     type: [String],
-    trim: true,
-    index: true
+    trim: true
   },
   languages: {
     type: [String]
@@ -65,6 +64,13 @@ const schema = new Schema({
     updatedAt: 'updatedAt'
   }
 })
+
+// Добавим индекс для получения списка всех уроков на странице: /tutorials
+schema.index({ createdAt: -1 })
+schema.index({ projects: 1, createdAt: -1})
+schema.index({ languages: 1, createdAt: -1})
+schema.index({ platforms: 1, createdAt: -1})
+
 
 schema.path('keywords').set(keywords => keywords.split(','))
 

@@ -1,4 +1,7 @@
 
+Подробнее об индексах в монге: http://jsman.ru/mongo-book/Glava-7-Proizvoditelnost-i-instrumentarij.html
+
+
 # find 
 
 ```

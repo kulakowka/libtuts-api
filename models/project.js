@@ -10,22 +10,19 @@ const schema = new Schema({
     lowercase: true,
     required: true,
     trim: true,
-    index: true,
     maxlength: 100
   },
   language: {
     type: String,
     required: true,
     lowercase: true,
-    trim: true,
-    index: true
+    trim: true
   },
   platform: {
     type: String,
     lowercase: true,
     required: true,
-    trim: true,
-    index: true
+    trim: true
   },
   homepageUrl: {
     type: String,
@@ -51,7 +48,6 @@ const schema = new Schema({
     type: [String],
     lowercase: true,
     trim: true
-    // index: true
   },
   tutorialsCount: {
     type: Number,
@@ -76,7 +72,15 @@ const schema = new Schema({
   }
 })
 
-schema.index({ name: 1, platform: 1 }, { unique: true })
+// Добавим индекс для получения списка всех проектов на странице: /projects
+schema.index({ rank: -1 })
+
+// Добавим уникальный индекс, чтобы нельзя было добавить два проекта с одинаковыми name и platform
+schema.index({ name: 1, platform: 1 }, {unique: true})
+
+schema.index({ language: 1, rank: -1})
+schema.index({ platform: 1, rank: -1})
+
 
 schema.path('keywords').set(keywords => {
   if (typeof keywords === String) return keywords.split(',')

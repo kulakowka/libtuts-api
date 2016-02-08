@@ -10,7 +10,9 @@ const schema = new Schema({
     trim: true,
     required: true,
     maxlength: 100,
-    minLength: 3
+    minLength: 3,
+    unique: true,
+    index: true
   },
   email: {
     type: String,
