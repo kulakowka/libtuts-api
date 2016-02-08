@@ -22,9 +22,9 @@ function seedData () {
     tutorials (callback) {
       models.tutorial.create(data.tutorials, callback)
     },
-    projects (callback) {
-      models.project.create(data.projects, callback)
-    },
+    // projects (callback) {
+    //   models.project.create(data.projects, callback)
+    // },
     comments (callback) {
       mapComments(data.comments, (err, comments) => {
         if (err) return callback(err)
