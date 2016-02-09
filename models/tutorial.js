@@ -66,13 +66,10 @@ const schema = new Schema({
 })
 
 // Добавим индекс для получения списка всех уроков на странице: /tutorials
-schema.index({ createdAt: -1 })
-schema.index({ projects: 1, createdAt: -1})
-schema.index({ languages: 1, createdAt: -1})
-schema.index({ platforms: 1, createdAt: -1})
-
-
-schema.path('keywords').set(keywords => keywords.split(','))
+schema.index({createdAt: -1})
+schema.index({projects: 1, createdAt: -1})
+schema.index({languages: 1, createdAt: -1})
+schema.index({platforms: 1, createdAt: -1})
 
 schema.pre('save', function (next) {
   if (!this.isModified('content')) return next()

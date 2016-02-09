@@ -3,16 +3,16 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 
 var pmx = require('pmx').init({
-  custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
-  network       : true, // Network monitoring at the application level
-  ports         : true  // Shows which ports your app is listening on (default: false)
+  custom_probes: true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
+  network: true, // Network monitoring at the application level
+  ports: true  // Shows which ports your app is listening on (default: false)
 })
 
 var app = express()
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/', require('./routes/index'))
 

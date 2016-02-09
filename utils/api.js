@@ -42,6 +42,14 @@ const api = {
     .populate(populate)
     .exec()
     .then(item => item && serializers[modelName](item.toJSON()))
+  },
+
+  create (model, req) {
+    let modelName = model.modelName.toLowerCase()
+    let body = req.body
+    console.log('API', body)
+    return model.create(body)
+    .then(item => item && serializers[modelName](item.toJSON()))
   }
 }
 
