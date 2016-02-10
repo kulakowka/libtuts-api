@@ -48,10 +48,9 @@ const schema = new Schema({
   platforms: {
     type: [String]
   },
-  projects: [{
-    name: String,
-    platform: String
-  }],
+  projects: {
+    type: [String]
+  },
   commentsCount: {
     type: Number,
     default: 0
