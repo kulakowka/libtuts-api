@@ -33,11 +33,4 @@ const schema = new Schema({
 
 schema.index({ tutorial: 1, createdAt: -1})
  
-
-schema.pre('save', function (next) {
-  if (!this.isModified('content')) return next()
-  this.contentHtml = marked(this.content)
-  next()
-})
-
 module.exports = mongoose.model('Comment', schema)

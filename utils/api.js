@@ -4,6 +4,8 @@ const requireDir = require('require-dir')
 const serializers = requireDir('../serializers', {recurse: true})
 const models = require('require-dir')('../models', {recurse: true})
 
+const defaultLimit = 30
+
 const api = {
   find (model, req) {
     let query = req.query
@@ -12,7 +14,7 @@ const api = {
     if (query.populate) query.populate.forEach(field => q.populate(field))
     if (query.select) query.select.forEach(field => q.select(field))
     if (query.sort) q.sort(query.sort)
-    if (query.limit) q.limit(query.limit)
+    q.limit(query.limit || defaultLimit)
     if (query.skip) q.limit(query.skip)
     return q.exec().then(items => items.map(serialize(model)))
   },
@@ -27,8 +29,10 @@ const api = {
   },
 
   create (model, req) {
-    let q = models[model].create(req.body)
-    return q.then(serialize(model))
+    let query = req.query
+    let q = models[model]
+    if (query.populate) query.populate.forEach(field => q.populate(field))
+    return q.create(req.body).then(serialize(model))
   },
 
   update (model, req) {
