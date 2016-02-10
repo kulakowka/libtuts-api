@@ -44,4 +44,10 @@ const schema = new Schema({
   }
 })
 
+schema.pre('save', function (next) {
+  if (!this.isModified('username')) return next()
+  this.fullName = this.fullName || this.username
+  next()
+})
+
 module.exports = mongoose.model('User', schema)
