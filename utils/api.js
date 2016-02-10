@@ -49,6 +49,15 @@ const api = {
     let body = req.body
     return model.create(body)
     .then(item => item && serializers[modelName](item.toJSON()))
+  },
+
+  update (model, req) {
+    let modelName = model.modelName.toLowerCase()
+    let query = req.query
+    let where = query.where ? JSON.parse(query.where) : {}
+    let body = req.body
+    return model.findOneAndUpdate(where, body, {new: true})
+    .then(item => item && serializers[modelName](item.toJSON()))
   }
 }
 
