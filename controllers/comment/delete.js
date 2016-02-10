@@ -1,5 +1,6 @@
 'use strict'
 
-const models = require('require-dir')('../../models', {recurse: true})
+const api = require('../../utils/api')
 
-module.exports = (req, res) => models.comment.findOneAndRemove(req.query.where).exec()
+module.exports = (req, res) => api.delete('comment', req)
+

@@ -2,63 +2,47 @@
 
 const requireDir = require('require-dir')
 const serializers = requireDir('../serializers', {recurse: true})
+const models = require('require-dir')('../models', {recurse: true})
 
 const api = {
   find (model, req) {
-    let modelName = model.modelName.toLowerCase()
     let query = req.query
-    let limit = query.limit || 30
-    let where = {}
-    try {
-      where = query.where ? JSON.parse(query.where) : {}
-    } catch (err) {}
-    let select = query.select ? query.select.split(',').join(' ') : ''
-    let skip = query.skip || 0
-    let sort = query.sort || ''
-    let populate = query.populate ? query.populate.split(',').join(' ') : ''
-    try {
-      sort = JSON.parse(sort)
-    } catch (err) {}
-    return model.find()
-    .where(where)
-    .select(select)
-    .limit(limit)
-    .skip(skip)
-    .sort(sort)
-    .populate(populate)
-    .exec()
-    .then(items => items.map(item => serializers[modelName](item.toJSON())))
+    let q = models[model].find()
+    if (query.where) q.where(req.query.where)
+    if (query.populate) query.populate.forEach(field => q.populate(field))
+    if (query.select) query.select.forEach(field => q.select(field))
+    if (query.sort) q.sort(query.sort)
+    if (query.limit) q.limit(query.limit)
+    if (query.skip) q.limit(query.skip)
+    return q.exec().then(items => items.map(serialize(model)))
   },
 
   findOne (model, req) {
-    let modelName = model.modelName.toLowerCase()
     let query = req.query
-    let where = query.where ? JSON.parse(query.where) : {}
-    let select = query.select ? query.select.split(',').join(' ') : ''
-    let populate = query.populate ? query.populate.split(',').join(' ') : ''
-
-    return model.findOne(where)
-    .select(select)
-    .populate(populate)
-    .exec()
-    .then(item => item && serializers[modelName](item.toJSON()))
+    let q = models[model].findOne()
+    if (query.where) q.where(req.query.where)
+    if (query.populate) query.populate.forEach(field => q.populate(field))
+    if (query.select) query.select.forEach(field => q.select(field))
+    return q.exec().then(serialize(model))
   },
 
   create (model, req) {
-    let modelName = model.modelName.toLowerCase()
-    let body = req.body
-    return model.create(body)
-    .then(item => item && serializers[modelName](item.toJSON()))
+    let q = models[model].create(req.body)
+    return q.then(serialize(model))
   },
 
   update (model, req) {
-    let modelName = model.modelName.toLowerCase()
-    let query = req.query
-    let where = query.where ? JSON.parse(query.where) : {}
-    let body = req.body
-    return model.findOneAndUpdate(where, body, {new: true})
-    .then(item => item && serializers[modelName](item.toJSON()))
+    let q = models[model].findOneAndUpdate(req.query.where, req.body, {new: true})
+    return q.then(serialize(model))
+  },
+
+  delete (model, req) {
+    let q = models[model].findOneAndRemove(req.query.where)
+    return q.then(serialize(model))
   }
 }
 
+function serialize (model) {
+  return (item) => item && serializers[model](item.toJSON())
+}
 module.exports = api

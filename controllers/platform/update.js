@@ -1,5 +1,5 @@
 'use strict'
 
-const models = require('require-dir')('../../models', {recurse: true})
+const api = require('../../utils/api')
 
-module.exports = (req, res) => models.platform.findOneAndUpdate(req.query.where, req.body, {new: true}).exec()
+module.exports = (req, res) => api.update('platform', req)
