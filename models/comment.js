@@ -1,7 +1,6 @@
 'use strict'
 
 const mongoose = require('../utils/mongoose')
-const marked = require('../utils/marked')
 
 const Schema = mongoose.Schema
 
