@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 start ecosystem.json",
-    "seed": "node --harmony initializers/seed"
+    "start": "./node_modules/.bin/pm2 start ecosystem.json",
+    "seed": "node --harmony initializers/seed",
+    "start_production": "./node_modules/.bin/pm2 startOrRestart ecosystem.json --env production"
   },
   "dependencies": {
     "async": "^1.5.2",
@@ -16,6 +17,7 @@
     "mongoose": "^4.4.3",
     "morgan": "~1.6.1",
     "node-schedule": "^1.0.0",
+    "pm2": "^1.0.0",
     "pmx": "^0.6.0",
     "require-dir": "^0.3.0"
   }
