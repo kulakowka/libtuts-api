@@ -1,5 +1,5 @@
 const marked = require('marked')
-const highlightjs = require('highlight.js')
+// const highlightjs = require('highlight.js')
 
 marked.setOptions({
   // renderer: new marked.Renderer(),
