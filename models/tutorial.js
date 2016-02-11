@@ -22,6 +22,9 @@ const schema = new Schema({
     trim: true,
     maxlength: 2000
   },
+  sourceDomain: {
+    type: String
+  },
   content: {
     type: String,
     trim: true,
