@@ -4,7 +4,7 @@
       "name"      : "API",
       "script"    : "bin/www",
       "node_args" : "--harmony",
-      "instances" : 2,
+      "instances" : 1,
       "autorestart": true,
       "watch": true,
       "ignore_watch": [
