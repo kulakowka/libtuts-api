@@ -22,6 +22,12 @@ const schema = new Schema({
   }
 })
 
+schema.virtual('webUrl').get(function () {
+  return this.name && `/language/${this.name}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
 // Добавим индекс для получения списка всех языков на странице: /languages
 schema.index({ projectsCount: -1 })
 

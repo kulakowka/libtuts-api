@@ -22,6 +22,12 @@ const schema = new Schema({
   }
 })
 
+schema.virtual('webUrl').get(function () {
+  return this.name && `/${this.name}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
 // Добавим индекс для получения списка всех платформ на странице: /platforms
 schema.index({ projectsCount: -1 })
 

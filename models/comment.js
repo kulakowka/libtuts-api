@@ -31,6 +31,12 @@ const schema = new Schema({
   }
 })
 
-schema.index({ tutorial: 1, createdAt: -1})
- 
+schema.virtual('webUrl').get(function () {
+  return (this.tutorial && this._id) && `/tutorial/${this.tutorial}#comment_${this._id}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
+schema.index({ tutorial: 1, createdAt: -1 })
+
 module.exports = mongoose.model('Comment', schema)

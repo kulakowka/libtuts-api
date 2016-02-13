@@ -66,6 +66,12 @@ const schema = new Schema({
   }
 })
 
+schema.virtual('webUrl').get(function () {
+  return this._id && `/tutorial/${this._id}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
 // Добавим индекс для получения списка всех уроков на странице: /tutorials
 schema.index({createdAt: -1})
 schema.index({projects: 1, createdAt: -1})

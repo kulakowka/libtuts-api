@@ -72,15 +72,19 @@ const schema = new Schema({
   }
 })
 
+schema.virtual('webUrl').get(function () {
+  return (this.platform && this.name) && `/${this.platform}/${this.name}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
 // Добавим индекс для получения списка всех проектов на странице: /projects
 schema.index({ rank: -1 })
 
 // Добавим уникальный индекс, чтобы нельзя было добавить два проекта с одинаковыми name и platform
 schema.index({ name: 1, platform: 1 }, {unique: true})
-
-schema.index({ language: 1, rank: -1})
-schema.index({ platform: 1, rank: -1})
-
+schema.index({ language: 1, rank: -1 })
+schema.index({ platform: 1, rank: -1 })
 
 schema.path('keywords').set(keywords => {
   if (typeof keywords === String) return keywords.split(',')

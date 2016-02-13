@@ -44,6 +44,12 @@ const schema = new Schema({
   }
 })
 
+schema.virtual('webUrl').get(function () {
+  return this.username && `/user/${this.username}`
+})
+
+schema.set('toJSON', { virtuals: true })
+
 schema.pre('save', function (next) {
   if (!this.isModified('username')) return next()
   this.fullName = this.fullName || this.username

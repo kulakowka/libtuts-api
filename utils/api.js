@@ -1,7 +1,5 @@
 'use strict'
 
-const requireDir = require('require-dir')
-const serializers = requireDir('../serializers', {recurse: true})
 const models = require('require-dir')('../models', {recurse: true})
 
 const defaultLimit = 30
@@ -16,7 +14,7 @@ const api = {
     if (query.sort) q.sort(query.sort)
     q.limit(query.limit || defaultLimit)
     if (query.skip) q.limit(query.skip)
-    return q.exec().then(items => items.map(serialize(model)))
+    return q.exec()
   },
 
   findOne (model, req) {
@@ -25,28 +23,23 @@ const api = {
     if (query.where) q.where(req.query.where)
     if (query.populate) query.populate.forEach(field => q.populate(field))
     if (query.select) query.select.forEach(field => q.select(field))
-    return q.exec().then(serialize(model))
+    return q.exec()
   },
 
   create (model, req) {
     let query = req.query
     let q = models[model]
     if (query.populate) query.populate.forEach(field => q.populate(field))
-    return q.create(req.body).then(serialize(model))
+    return q.create(req.body)
   },
 
   update (model, req) {
-    let q = models[model].findOneAndUpdate(req.query.where, req.body, {new: true})
-    return q.then(serialize(model))
+    return models[model].findOneAndUpdate(req.query.where, req.body, {new: true})
   },
 
   delete (model, req) {
-    let q = models[model].findOneAndRemove(req.query.where)
-    return q.then(serialize(model))
+    return models[model].findOneAndRemove(req.query.where)
   }
 }
 
-function serialize (model) {
-  return (item) => item && serializers[model](item.toJSON())
-}
 module.exports = api
