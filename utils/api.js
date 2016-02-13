@@ -27,9 +27,7 @@ const api = {
   },
 
   create (model, req) {
-    let query = req.query
     let q = models[model]
-    if (query.populate) query.populate.forEach(field => q.populate(field))
     return q.create(req.body)
   },
 
