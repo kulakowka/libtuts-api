@@ -9,7 +9,7 @@ const schema = new Schema({
     type: String,
     trim: true,
     required: true,
-    maxlength: 100,
+    maxlength: 20,
     minLength: 3,
     unique: true,
     index: true
@@ -22,7 +22,8 @@ const schema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   fullName: {
     type: String,

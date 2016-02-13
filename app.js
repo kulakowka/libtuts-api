@@ -1,6 +1,8 @@
 const express = require('express')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
+const expressValidator = require('express-validator')
+const validatorOptions = require('./utils/validatorOptions')
 
 var pmx = require('pmx').init({
   custom_probes: true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics
@@ -13,6 +15,7 @@ var app = express()
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(expressValidator(validatorOptions))
 
 app.use('/', require('./routes/index'))
 
@@ -25,7 +28,6 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500)
-  console.log(err)
   res.json({
     error: {
       message: err.message
