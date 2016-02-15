@@ -8,6 +8,7 @@
     "start_production": "./node_modules/.bin/pm2 startOrRestart ecosystem.json --env production"
   },
   "dependencies": {
+    "@risingstack/trace": "^2.1.4",
     "async": "^1.5.2",
     "body-parser": "~1.15.0",
     "debug": "^2.2.0",
