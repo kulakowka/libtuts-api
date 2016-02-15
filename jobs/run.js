@@ -50,6 +50,5 @@ function startTutorialJobs () {
 
 function startUserJobs () {
   var date = moment().add(-2, 'minutes')
-  jobs.user.updateCounters(date)
   schedule.scheduleJob('*/1 * * * *', jobs.user.updateCounters(date))
 }
