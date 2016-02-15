@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/pm2 start ecosystem.json",
+    "logs": "./node_modules/.bin/pm2 logs API",
     "seed": "node --harmony initializers/seed",
     "start_production": "./node_modules/.bin/pm2 startOrRestart ecosystem.json --env production"
   },
