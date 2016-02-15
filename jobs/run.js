@@ -23,6 +23,7 @@ function startJobs () {
   startLanguageJobs()
   startProjectJobs()
   startTutorialJobs()
+  startUserJobs()
 }
 
 function startPlatformJobs () {
@@ -37,13 +38,18 @@ function startLanguageJobs () {
   schedule.scheduleJob(rule, jobs.language.updateCounters)
 }
 
-// По такому же принципу можно обновлять кол-во комментов у статей. ЩАас попробую.
 function startProjectJobs () {
-  var date = moment().add(-2, 'minutes')
+  var date = moment().add(-4, 'minutes')
   schedule.scheduleJob('*/3 * * * *', jobs.project.updateCounters(date))
 }
 
 function startTutorialJobs () {
   var date = moment().add(-2, 'minutes')
   schedule.scheduleJob('*/1 * * * *', jobs.tutorial.updateCounters(date))
+}
+
+function startUserJobs () {
+  var date = moment().add(-2, 'minutes')
+  jobs.user.updateCounters(date)
+  schedule.scheduleJob('*/1 * * * *', jobs.user.updateCounters(date))
 }
