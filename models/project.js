@@ -73,14 +73,11 @@ const schema = new Schema({
     default: false
   }
 }, {
-  timestamps: {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  }
+  timestamps: true
 })
 
 schema.virtual('webUrl').get(function () {
-  return (this.platform && this.name) && `/${this.platform}/${this.name}`
+  return `/${this.slug}`
 })
 
 schema.set('toJSON', { virtuals: true })

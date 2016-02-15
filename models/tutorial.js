@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('../utils/mongoose')
+const validate = require('mongoose-validator')
 
 const Schema = mongoose.Schema
 
@@ -9,18 +10,25 @@ const schema = new Schema({
     type: String,
     trim: true,
     required: true,
-    maxlength: 1000
+    minlength: 5,
+    maxlength: 200
   },
   slug: {
     type: String,
     lowercase: true,
-    trim: true,
-    maxlength: 1000
+    trim: true
   },
   sourceUrl: {
     type: String,
     trim: true,
-    maxlength: 2000
+    maxlength: 2000,
+    validate: [
+      validate({
+        validator: 'isURL',
+        passIfEmpty: true,
+        message: 'Source URL should contain a valid URL address'
+      })
+    ]
   },
   sourceDomain: {
     type: String
@@ -60,10 +68,7 @@ const schema = new Schema({
     default: 0
   }
 }, {
-  timestamps: {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  }
+  timestamps: true
 })
 
 schema.virtual('webUrl').get(function () {

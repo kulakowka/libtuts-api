@@ -32,7 +32,7 @@ const api = {
   },
 
   update (model, req) {
-    return models[model].findOneAndUpdate(req.query.where, req.body, {new: true})
+    return models[model].findOneAndUpdate(req.query.where, req.body, {new: true, runValidators: true})
   },
 
   delete (model, req) {

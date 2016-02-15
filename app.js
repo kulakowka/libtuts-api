@@ -27,13 +27,9 @@ app.use((req, res, next) => {
   next(err)
 })
 
-app.use((err, req, res, next) => {
-  res.status(err.status || 500)
-  res.json({
-    error: {
-      message: err.message
-    }
-  })
+app.use((error, req, res, next) => {
+  res.status(error.status || 500)
+  res.json({error, errors: error.errors})
   // console.log(err.stack)
 })
 

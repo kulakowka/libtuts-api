@@ -1,6 +1,7 @@
 'use strict'
 
 const mongoose = require('../utils/mongoose')
+const validate = require('mongoose-validator')
 
 const Schema = mongoose.Schema
 
@@ -10,19 +11,32 @@ const schema = new Schema({
     trim: true,
     required: true,
     maxlength: 20,
-    minLength: 3,
+    minlength: 3,
     unique: true,
-    index: true
+    index: true,
+    validate: [
+      validate({
+        validator: 'isAlphanumeric',
+        message: 'Username should contain alpha-numeric characters only'
+      })
+    ]
   },
   email: {
     type: String,
     trim: true,
     required: true,
-    maxlength: 500
+    maxlength: 500,
+    validate: [
+      validate({
+        validator: 'isEmail',
+        message: 'Email should contain a valid Email address'
+      })
+    ]
   },
   password: {
     type: String,
     required: true,
+    minlength: 8,
     select: false
   },
   fullName: {
@@ -39,10 +53,7 @@ const schema = new Schema({
     default: 0
   }
 }, {
-  timestamps: {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  }
+  timestamps: true
 })
 
 schema.virtual('webUrl').get(function () {
@@ -51,10 +62,20 @@ schema.virtual('webUrl').get(function () {
 
 schema.set('toJSON', { virtuals: true })
 
+schema.path('username').validate((value, respond) => {
+  User.count({username: value}, (_, count) => respond(!count))
+}, 'Username is already taken')
+
+schema.path('email').validate((value, respond) => {
+  User.count({email: value}, (_, count) => respond(!count))
+}, 'Email is already taken')
+
 schema.pre('save', function (next) {
   if (!this.isModified('username')) return next()
   this.fullName = this.fullName || this.username
   next()
 })
 
-module.exports = mongoose.model('User', schema)
+var User = mongoose.model('User', schema)
+
+module.exports = User

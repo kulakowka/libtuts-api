@@ -25,10 +25,7 @@ const schema = new Schema({
     ref: 'User'
   }
 }, {
-  timestamps: {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  }
+  timestamps: true
 })
 
 schema.virtual('webUrl').get(function () {

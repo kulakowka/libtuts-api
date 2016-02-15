@@ -10,6 +10,5 @@ module.exports = (req, res) => {
     let domain = getDomainFromUrl(req.body.sourceUrl)
     req.body.sourceDomain = domain
   }
-  console.log(req.body)
   return api.update('tutorial', req)
 }
