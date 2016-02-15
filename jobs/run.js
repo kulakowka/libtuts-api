@@ -1,6 +1,7 @@
 const jobs = require('require-dir')('.', {recurse: true})
 const mongoose = require('../utils/mongoose')
 const schedule = require('node-schedule')
+const moment = require('moment')
 
 /*
 Schedule
@@ -20,6 +21,8 @@ mongoose.connection.on('connected', startJobs)
 function startJobs () {
   startPlatformJobs()
   startLanguageJobs()
+  startProjectJobs()
+  startTutorialJobs()
 }
 
 function startPlatformJobs () {
@@ -34,13 +37,13 @@ function startLanguageJobs () {
   schedule.scheduleJob(rule, jobs.language.updateCounters)
 }
 
-/*
+// По такому же принципу можно обновлять кол-во комментов у статей. ЩАас попробую.
+function startProjectJobs () {
+  var date = moment().add(-2, 'minutes')
+  schedule.scheduleJob('*/3 * * * *', jobs.project.updateCounters(date))
+}
 
-Придумал как обновлять кол-во статей у проектов
-
-  Каждый час запускается задание:
-    Надо брать все статьи, которые были обновлены за последний час.
-    Выбирать все проекты к которым они отнесены.
-    Дальше каждому из этих проектов обновлять каунтер.
- */
-
+function startTutorialJobs () {
+  var date = moment().add(-2, 'minutes')
+  schedule.scheduleJob('*/1 * * * *', jobs.tutorial.updateCounters(date))
+}

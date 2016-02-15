@@ -4,7 +4,7 @@ const async = require('async')
 const debug = require('debug')('app:jobs')
 const models = require('require-dir')('../../models', {recurse: true})
 
-module.exports = function updateProjectsCount () {
+module.exports = function updatePlatformCounters () {
   return models.platform.find().then(updatePlatforms)
 }
 

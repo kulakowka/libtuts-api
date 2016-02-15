@@ -25,7 +25,6 @@
       "script"    : "jobs/run.js",
       "node_args" : "--harmony",
       "autorestart": true,
-      "watch": false,
       "env": {
         "MONGO_URL": "mongodb://localhost/libtuts_prototype_api_v1",
         "DEBUG": "app:jobs"

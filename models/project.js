@@ -5,6 +5,11 @@ const mongoose = require('../utils/mongoose')
 const Schema = mongoose.Schema
 
 const schema = new Schema({
+  // npm/react
+  slug: {
+    type: String
+  },
+  // react
   name: {
     type: String,
     lowercase: true,
@@ -12,16 +17,18 @@ const schema = new Schema({
     trim: true,
     maxlength: 100
   },
-  language: {
-    type: String,
-    required: true,
-    lowercase: true,
-    trim: true
-  },
+  // npm
   platform: {
     type: String,
     lowercase: true,
     required: true,
+    trim: true
+  },
+  // javascript
+  language: {
+    type: String,
+    required: true,
+    lowercase: true,
     trim: true
   },
   homepageUrl: {
@@ -92,6 +99,7 @@ schema.path('keywords').set(keywords => {
 })
 
 schema.pre('save', function (next) {
+  this.slug = this.platform + '/' + this.name
   // if (this.keywords.length) return next()
   // if (this.platforms) this.keywords = this.keywords.concat(this.platforms, this.languages)
   // if (this.languages)
