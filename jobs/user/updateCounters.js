@@ -5,10 +5,12 @@ const debug = require('debug')('app:jobs')
 const models = require('require-dir')('../../models', {recurse: true})
 
 module.exports = function updateUserCounters (date) {
-  async.parallel({
-    comments: getLatestComments(date),
-    tutorials: getLatestTutorials(date)
-  }, updateUsersCounters)
+  return () => {
+    async.parallel({
+      comments: getLatestComments(date),
+      tutorials: getLatestTutorials(date)
+    }, updateUsersCounters)
+  }
 }
 
 function updateUsersCounters (err, result) {
