@@ -18,18 +18,6 @@ function seedData () {
     },
     platforms (callback) {
       models.platform.create(data.platforms, callback)
-    },
-    tutorials (callback) {
-      models.tutorial.create(data.tutorials, callback)
-    },
-    // projects (callback) {
-    //   models.project.create(data.projects, callback)
-    // },
-    comments (callback) {
-      mapComments(data.comments, (err, comments) => {
-        if (err) return callback(err)
-        models.comment.create(comments, callback)
-      })
     }
   }, (err, result) => {
     if (err) return console.log(err)
@@ -38,19 +26,5 @@ function seedData () {
       console.log('%s: %d', model, result[model].length)
     }
     mongoose.connection.close()
-  })
-}
-
-// Helpers for data seed
-function mapComments (comments, callback) {
-  async.map(comments, fillCommentRelations, callback)
-}
-
-function fillCommentRelations (comment, callback) {
-  models.tutorial.find({}, (err, tutorials) => {
-    if (err) return callback(err)
-    let tutorial = tutorials.pop()
-    comment.tutorial = tutorial.id
-    callback(null, comment)
   })
 }

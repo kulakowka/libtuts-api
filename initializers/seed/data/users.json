@@ -2,25 +2,25 @@
    {  
       "username":"admin",
       "email":"admin@example.com",
-      "password":"pass",
-      "fullName":"Admin"
+      "password":"ak87c210xx",
+      "isAdmin": true,
+      "emailConfirmed": true
    },
    {  
       "username":"kulakowka",
       "email":"kulakowka@gmail.com",
-      "password":"pass",
-      "fullName":"Anton Kulakov"
+      "password":"ak87c210xx",
+      "isAdmin": true,
+      "emailConfirmed": true
    },
    {  
       "username":"user1",
       "email":"user1@example.com",
-      "password":"pass",
-      "fullName":"User One"
+      "password":"ak87c210xx"
    },
    {  
       "username":"user2",
       "email":"user2@example.com",
-      "password":"pass",
-      "fullName":"User Two"
+      "password":"ak87c210xx"
    }
 ]
