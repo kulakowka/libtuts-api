@@ -7,6 +7,7 @@ const controllers = requireDir('../controllers', {recurse: true})
 
 const resources = Object.keys(controllers)
 const methods = {
+  login: 'post', // hack
   index: 'get',
   show: 'get',
   create: 'post',
@@ -20,7 +21,7 @@ resources.forEach(resource => {
     const handler = controllers[resource][action]
     const method = methods[action]
     router[method](pathname, (req, res, next) => {
-      handler(req, res)
+      handler(req, res, next)
       .then(res.json.bind(res))
       .catch(next)
     })

@@ -1,7 +1,10 @@
 'use strict'
 
-const mongoose = require('../utils/mongoose')
-const validate = require('mongoose-validator')
+var mongoose = require('../utils/mongoose')
+var validate = require('mongoose-validator')
+var bcrypt = require('bcrypt')
+
+const SALT_WORK_FACTOR = 10
 
 const Schema = mongoose.Schema
 
@@ -60,6 +63,11 @@ const schema = new Schema({
   timestamps: true
 })
 
+// Instance methods (user.comparePassword)
+schema.methods.comparePassword = function comparePassword (candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, callback)
+}
+
 schema.virtual('webUrl').get(function () {
   return this.username && `/user/${this.username}`
 })
@@ -75,9 +83,16 @@ schema.path('email').validate((value, respond) => {
 }, 'Email is already taken')
 
 schema.pre('save', function (next) {
-  if (!this.isModified('username')) return next()
-  this.fullName = this.fullName || this.username
-  next()
+  if (!this.isModified('password')) return next()
+
+  bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    if (err) return next(err)
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err)
+      this.password = hash
+      next()
+    })
+  })
 })
 
 var User = mongoose.model('User', schema)
