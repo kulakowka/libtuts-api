@@ -4,7 +4,7 @@
       "name"      : "API",
       "script"    : "bin/www",
       "node_args" : "--harmony",
-      "instances" : 2,
+      "instances" : 1,
       "autorestart": true,
       "watch": true,
       "ignore_watch": [
@@ -25,6 +25,7 @@
       "script"    : "jobs/run.js",
       "node_args" : "--harmony",
       "autorestart": true,
+      "watch": ["jobs"],
       "env": {
         "MONGO_URL": "mongodb://localhost/libtuts_prototype_api_v1",
         "DEBUG": "app:jobs"
